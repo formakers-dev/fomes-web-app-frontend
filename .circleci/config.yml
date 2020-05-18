@@ -1,0 +1,120 @@
+aliases:
+  - &attach_workspace
+    at: ~/girlapp-web
+
+  - &update-npm
+    name: npm 업데이트
+    command: sudo npm install -g npm@6.1.0
+
+  - &restore-npm-cache
+    keys:
+      - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+      - v1-dependencies-{{ .Branch }}-
+
+  - &install-npm
+    name: npm 설치
+    command: npm install
+
+  - &save-npm-cache
+    key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+    paths:
+      - node_modules
+
+defaults: &defaults
+  working_directory: ~/girlapp-web
+  docker:
+    - image: circleci/node:13.7
+
+version: 2
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - save_cache: *save-npm-cache
+      - run:
+          name: npm 테스트
+          command: npm test
+
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - run:
+          name: sass rebuild
+          command: npm rebuild node-sass
+      - save_cache: *save-npm-cache
+      - run:
+          name: Build in Development Mode
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths: dist
+      - run:
+          name: check dist directory
+          command: pwd; ls; ls dist
+
+#  dev-deploy:
+#    <<: *defaults
+#    steps:
+#      - checkout
+#      - attach_workspace: *attach_workspace
+#      - run: *update-npm
+#      - restore_cache: *restore-npm-cache
+#      - run: *install-npm
+#      - save_cache: *save-npm-cache
+#      - run:
+#          name: Dev Firebase Deploy
+#          command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:formakers-landing-dev --token "$DEV_FIREBASE_TOKEN"
+#      - run:
+#          name: Archive and Delivery to Slack
+#          command: bash .circleci/delivery-to-slack.sh DEV dev-build $CIRCLE_BRANCH
+#
+#  prd-deploy:
+#    <<: *defaults
+#    steps:
+#      - checkout
+#      - attach_workspace: *attach_workspace
+#      - run: *update-npm
+#      - restore_cache: *restore-npm-cache
+#      - run: *install-npm
+#      - save_cache: *save-npm-cache
+#      - run:
+#          name: firebase.json prd용으로 대체
+#          command: mv firebase-prd.json firebase.json
+#      - run:
+#          name: Prd Firebase Deploy
+#          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:formakers --token "$FIREBASE_TOKEN"
+#      - run:
+#          name: Archive and Delivery to Slack
+#          command: bash .circleci/delivery-to-slack.sh PRD _general $CIRCLE_BRANCH
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      #      - test
+      - build
+#      - dev-deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only:
+#                - master
+#                - circleci
+#      - prd-deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only:
+#                - release

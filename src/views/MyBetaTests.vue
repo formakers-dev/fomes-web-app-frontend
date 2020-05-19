@@ -8,39 +8,11 @@
     </section>
     <div class="container beta-test-list">
       <!-- 아래는 컴포넌트로 분리 필요 -->
-      <div class="card">
-        <div class="card-image">
-          <figure class="image">
-            <img v-bind:src="betaTests[0].coverImageUrl" alt="Placeholder image">
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-128x128">
-                <img v-bind:src="betaTests[0].iconImageUrl" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="media-content">
-              <p class="title is-4">{{betaTests[0].title}}</p>
-              <p class="subtitle is-6">뭐라고쓰지</p>
-              <time v-bind:datetime="betaTests[0].openDate">{{betaTests[0].openDate}}</time>
-              ~
-              <time v-bind:datetime="betaTests[0].closeDate">{{betaTests[0].closeDate}}</time>
-            </div>
+      <div class="columns is-multiline is-centered is-mobile">
+        <div v-for="betaTest in betaTests" v-bind:key="betaTest.title">
+          <div class="column">
+            <beta-test-card class="beta-test-card" v-bind:beta-test="betaTest"></beta-test-card>
           </div>
-
-          <div class="content">
-            <b style="color: #00BFBA">현재 참여 가능한 미션</b>
-            <a href="#">뭐시기 저시기</a>
-          </div>
-
-          <footer class="card-footer">
-            <div class="card-footer-item">
-              <b style="color: #00BFBA">현재 참여 가능한 미션</b>
-              <a href="#">뭐시기 저시기</a>
-            </div>
-          </footer>
         </div>
       </div>
     </div>
@@ -48,23 +20,86 @@
 </template>
 
 <script>
-const dummyData = {
-  title: "[더 팜M] 게임 테스트",
-  coverImageUrl: "https://i.imgur.com/J2Ivvhm.png",
-  iconImageUrl: "https://i.imgur.com/EgdSiW6.png",
-  openDate: new Date("2019-11-19T15:00:00.000Z"),
-  closeDate: new Date("2019-11-25T14:59:59.999Z"),
-};
+import BetaTestCard from "../components/BetaTestCard";
+
+const dummyData = [
+  {
+    title: "[더 팜M] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/J2Ivvhm.png",
+    iconImageUrl: "https://i.imgur.com/EgdSiW6.png",
+    openDate: new Date("2020-05-19T15:00:00.000Z"),
+    closeDate: new Date("2020-05-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  },
+  {
+    title: "[프로숫자야구] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/XQGrp7g.jpg",
+    iconImageUrl: "https://i.imgur.com/wGakihC.jpg",
+    openDate: new Date("2020-06-19T15:00:00.000Z"),
+    closeDate: new Date("2020-06-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  },
+  {
+    title: "[전자오락수호대] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/kWhk3Md.png",
+    iconImageUrl: "https://i.imgur.com/xlcdja2.jpg",
+    openDate: new Date("2020-01-19T15:00:00.000Z"),
+    closeDate: new Date("2020-01-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  },
+  {
+    title: "[더 팜M] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/J2Ivvhm.png",
+    iconImageUrl: "https://i.imgur.com/EgdSiW6.png",
+    openDate: new Date("2019-11-19T15:00:00.000Z"),
+    closeDate: new Date("2019-11-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  },
+  {
+    title: "[프로숫자야구] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/XQGrp7g.jpg",
+    iconImageUrl: "https://i.imgur.com/wGakihC.jpg",
+    openDate: new Date("2019-12-19T15:00:00.000Z"),
+    closeDate: new Date("2019-12-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  },
+  {
+    title: "[전자오락수호대] 게임 테스트",
+    coverImageUrl: "https://i.imgur.com/kWhk3Md.png",
+    iconImageUrl: "https://i.imgur.com/xlcdja2.jpg",
+    openDate: new Date("2020-01-19T15:00:00.000Z"),
+    closeDate: new Date("2020-01-25T14:59:59.999Z"),
+    mission: {
+      title: "플레이 후 소감",
+      action: "http://www.naver.com"
+    }
+  }
+];
 
 export default {
   name: "BetaTests",
+  components: {
+    BetaTestCard
+  },
   data() {
     return {
-      betaTests: []
+      betaTests: dummyData
     };
-  },
-  created() {
-    this.betaTests.push(dummyData);
   }
 };
 </script>
@@ -81,5 +116,8 @@ export default {
 }
 .beta-test-list {
   padding: 1rem;
+}
+.column {
+  width: 30rem;
 }
 </style>

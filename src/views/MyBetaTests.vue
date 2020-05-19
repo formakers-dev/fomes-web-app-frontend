@@ -14,6 +14,10 @@
             <beta-test-card class="beta-test-card" v-bind:beta-test="betaTest"></beta-test-card>
           </div>
         </div>
+        <div v-if="betaTests.length <= 0" style="text-align: center">
+          아직 참여중인 테스트가 없으시네요!<br/>
+          <a v-bind:href="fomesDownloadUrl">포메스 모바일 앱</a>에서 게임 테스트에 참여해주세요!
+        </div>
       </div>
     </div>
   </div>
@@ -98,7 +102,8 @@ export default {
   },
   data() {
     return {
-      betaTests: dummyData
+      betaTests: dummyData,
+      fomesDownloadUrl: "https://play.google.com/store/apps/details?id=com.formakers.fomes"
     };
   }
 };

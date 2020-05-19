@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "dev": "appbeemobile",
+    "prd": "appbeemobile-production"
+  }
+}

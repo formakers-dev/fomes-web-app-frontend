@@ -62,22 +62,22 @@ jobs:
           name: check dist directory
           command: pwd; ls; ls dist
 
-#  dev-deploy:
-#    <<: *defaults
-#    steps:
-#      - checkout
-#      - attach_workspace: *attach_workspace
-#      - run: *update-npm
-#      - restore_cache: *restore-npm-cache
-#      - run: *install-npm
-#      - save_cache: *save-npm-cache
-#      - run:
-#          name: Dev Firebase Deploy
-#          command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:formakers-landing-dev --token "$DEV_FIREBASE_TOKEN"
-#      - run:
-#          name: Archive and Delivery to Slack
-#          command: bash .circleci/delivery-to-slack.sh DEV dev-build $CIRCLE_BRANCH
-#
+  dev-deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - save_cache: *save-npm-cache
+      - run:
+          name: Dev Firebase Deploy
+          command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:fomes-web-dev --token "$FIREBASE_TOKEN"
+      - run:
+          name: Archive and Delivery to Slack
+          command: bash .circleci/delivery-to-slack.sh DEV dev-build $CIRCLE_BRANCH
+
 #  prd-deploy:
 #    <<: *defaults
 #    steps:
@@ -92,7 +92,7 @@ jobs:
 #          command: mv firebase-prd.json firebase.json
 #      - run:
 #          name: Prd Firebase Deploy
-#          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:formakers --token "$FIREBASE_TOKEN"
+#          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:fomes --token "$FIREBASE_TOKEN"
 #      - run:
 #          name: Archive and Delivery to Slack
 #          command: bash .circleci/delivery-to-slack.sh PRD _general $CIRCLE_BRANCH
@@ -103,14 +103,13 @@ workflows:
     jobs:
       #      - test
       - build
-#      - dev-deploy:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only:
-#                - master
-#                - circleci
+      - dev-deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
 #      - prd-deploy:
 #          requires:
 #            - build

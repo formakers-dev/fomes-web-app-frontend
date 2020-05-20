@@ -8,8 +8,7 @@
     </section>
     <b-loading v-bind:active.sync="isLoading"></b-loading>
     <div class="container beta-test-list">
-      <!-- 아래는 컴포넌트로 분리 필요 -->
-      <div class="columns is-multiline is-centered is-mobile">
+      <div v-if="betaTests" class="columns is-multiline is-centered is-mobile">
         <div v-for="betaTest in betaTests" v-bind:key="betaTest.title">
           <div class="column">
             <beta-test-card class="beta-test-card" :beta-test="betaTest" :email="email"></beta-test-card>

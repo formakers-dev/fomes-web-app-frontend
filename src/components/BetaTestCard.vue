@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="missions-container">
-        <b>현재 참여 가능한 미션</b>
+        <p style="font-weight: bold; margin-bottom: 0.3rem;">현재 참여 가능한 미션</p>
         <footer v-if="betaTest.missions" class="card-footer">
           <div
             class="card-footer-item"
@@ -109,6 +109,7 @@ export default {
   color: white;
 }
 .missions-container {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  text-align: center;
 }
 </style>

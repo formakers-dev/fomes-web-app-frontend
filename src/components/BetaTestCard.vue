@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-image">
       <figure class="image">
+        <b-tag class="d-day is-medium">{{ betaTest.closeDate | moment("from", "now") }} 종료</b-tag>
         <img v-bind:src="betaTest.coverImageUrl" />
       </figure>
     </div>
@@ -16,34 +17,38 @@
           <p class="title is-4">{{ betaTest.title }}</p>
           <div class="subtitle is-6">
             <p>{{ betaTest.tags.map(tag => "#" + tag).join(' ') }}</p>
+<!--            <p>-->
+<!--              <b-tag style="margin-right: 0.3rem" v-for="tag in betaTest.tags" v-bind:key="tag">{{tag}}</b-tag>-->
+<!--            </p>-->
             <p>
               <time v-bind:datetime="betaTest.openDate">{{ betaTest.openDate | moment("YYYY-MM-DD") }}</time>
               ~
               <time v-bind:datetime="betaTest.closeDate">{{ betaTest.closeDate | moment("YYYY-MM-DD") }}</time>
             </p>
             <p>
-              {{ betaTest.closeDate | moment("from", "now") }}
+              {{ betaTest.closeDate | moment("from", "now") }} 종료
             </p>
           </div>
         </div>
       </div>
-      <b style="font-size: 1.2rem">현재 참여 가능한 미션</b>
-      <footer v-if="betaTest.missions" class="card-footer">
-        <div
-          class="card-footer-item"
-          style="font-size: 1.2rem"
-          v-for="mission in betaTest.missions"
-          v-bind:key="mission._id"
-        >
-          <a
-            v-bind:href="mission.action.replace('{email}', email)"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div class="missions-container">
+        <b>현재 참여 가능한 미션</b>
+        <footer v-if="betaTest.missions" class="card-footer">
+          <div
+            class="card-footer-item"
+            v-for="mission in betaTest.missions"
+            v-bind:key="mission._id"
           >
-            {{ mission.title }}
-          </a>
-        </div>
-      </footer>
+            <a
+              v-bind:href="mission.action.replace('{email}', email)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ mission.title }}
+            </a>
+          </div>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
@@ -74,4 +79,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.d-day {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  background: #4a4a4a;
+  color: white;
+}
+.missions-container {
+  font-size: 1.2rem;
+}
+</style>

@@ -36,7 +36,7 @@
         <footer v-if="betaTest.missions" class="card-footer">
           <div
             class="card-footer-item"
-            v-for="mission in betaTest.missions"
+            v-for="mission in getValidMissions()"
             v-bind:key="mission._id"
           >
             <a
@@ -75,6 +75,27 @@ export default {
         console.log(this.betaTest);
       })
       .catch(err => console.error(err));
+  },
+  methods: {
+    getValidMissions() {
+      let result = [];
+      const repeatableMissions = this.betaTest.missions.filter(mission => mission.isRepeatable && mission.isCompleted);
+      const mandatoryMissions = this.betaTest.missions.filter(mission => mission.isMandatory && !mission.isCompleted);
+
+      if (repeatableMissions.length > 0) {
+        result = result.concat(repeatableMissions);
+      }
+
+      if (mandatoryMissions.length > 0) {
+        result.push(mandatoryMissions[0]);
+      }
+
+      if (result.length <= 0) {
+        result = this.betaTest.missions;
+      }
+
+      return result;
+    }
   }
 };
 </script>

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import request from "../common/utils/http";
 import BetaTestCard from "../components/BetaTestCard";
 
@@ -124,7 +125,9 @@ export default {
       .then(res => {
         this.isLoading = false;
         console.log(res.data);
-        this.betaTests = res.data.filter(betaTest => betaTest.isAttended && !betaTest.isCompleted);
+        this.betaTests = res.data
+          .filter(betaTest => betaTest.isAttended && !betaTest.isCompleted)
+          .sort((a, b) => moment(a.closeDate) - moment(b.closeDate));
       })
       .catch(err => {
         this.isLoading = false;

@@ -10,9 +10,6 @@
         <b-navbar-item href="/">
           Home
         </b-navbar-item>
-        <b-navbar-item href="/about">
-          About
-        </b-navbar-item>
         <b-navbar-item href="/beta-tests">
           BetaTests
         </b-navbar-item>

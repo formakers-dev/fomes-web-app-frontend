@@ -7,10 +7,10 @@
         </b-navbar-item>
       </template>
       <template slot="end">
-        <b-navbar-item href="/">
+        <b-navbar-item tag="router-link" to="/">
           Home
         </b-navbar-item>
-        <b-navbar-item href="/beta-tests">
+        <b-navbar-item tag="router-link" to="/beta-tests">
           BetaTests
         </b-navbar-item>
       </template>

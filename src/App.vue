@@ -1,10 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/beta-tests">BetaTests</router-link>
-    </div>
+    <b-navbar class="is-grayish-brown">
+      <template slot="brand">
+        <b-navbar-item tag="router-link" :to="{ path: '/' }">
+          <img src="./assets/logo.png" alt="Logo"/>
+        </b-navbar-item>
+      </template>
+      <template slot="end">
+        <b-navbar-item href="/">
+          Home
+        </b-navbar-item>
+        <b-navbar-item href="/about">
+          About
+        </b-navbar-item>
+        <b-navbar-item href="/beta-tests">
+          BetaTests
+        </b-navbar-item>
+      </template>
+    </b-navbar>
+
     <router-view />
   </div>
 </template>

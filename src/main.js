@@ -6,6 +6,16 @@ import Buefy from "buefy";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import GAuth from "vue-google-oauth2";
+import config from "../config";
+
+const gauthOption = {
+  clientId: config.googleClientId,
+  scope: 'profile email',
+  prompt: 'select_account'
+}
+
+Vue.use(GAuth, gauthOption);
 
 Vue.use(Buefy);
 Vue.use(VueMoment, { moment });

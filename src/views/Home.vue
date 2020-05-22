@@ -18,7 +18,7 @@
           <div class="columns is-centered">
             <div class="column has-text-centered">
               <h1 class="title">신작게임 놀이터, 포메스!!</h1>
-              <a href="#" @click="handleClickSignIn" v-show="!this.$root.isLoggedIn">
+              <a href="#" @click="handleClickSignIn" v-if="!this.$store.getters.isLoggedIn">
                 <img src="../assets/btn_google_signin_light_normal_web.png" alt="Login"/>
               </a>
             </div>
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-  import request from "../common/utils/http";
-
 export default {
   name: "Home",
   methods: {
@@ -40,15 +38,10 @@ export default {
             .then(googleUser => {
               const idToken = googleUser.getAuthResponse().id_token;
 
-              const headers = {
-                'Content-Type': 'application/json',
-                'x-id-token': idToken
-              };
-
-              return request.post('/user/signIn', {}, {headers : headers});
+              return this.$store.dispatch('login', idToken);
             })
             .then(user => {
-              this.$root.setLoggedIn(user);
+              console.log("성공!!! : ", user);
             })
             .catch(error  => {
               console.error(error);

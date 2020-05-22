@@ -5,7 +5,7 @@
                 <img src="../assets/logo.png" alt="Logo"/>
             </b-navbar-item>
         </template>
-        <template slot="end">
+        <template slot="end" v-if="isLoggedIn">
             <b-navbar-item tag="router-link" to="/">
                 Home
             </b-navbar-item>
@@ -18,6 +18,11 @@
 
 <script>
 export default {
-    name: 'Headers'
+    name: 'Headers',
+    computed : {
+        isLoggedIn: function() {
+            return this.$store.getters.isLoggedIn;
+        }
+    }
 };
 </script>

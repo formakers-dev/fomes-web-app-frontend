@@ -23,17 +23,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-  data() {
-    return {
-      isLoggedIn: false,
-    };
-  },
   store,
-  render: h => h(App),
-  methods: {
-    setLoggedIn(user) {
-      console.log("isLoggedIn" + user.data.email);
-      this.isLoggedIn = true;
-    }
-  }
+  render: h => h(App)
 }).$mount("#app");

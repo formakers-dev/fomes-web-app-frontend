@@ -1,24 +1,19 @@
 <template>
   <div id="app">
-    <b-navbar>
-      <template slot="brand">
-        <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          <img src="./assets/logo.png" alt="Logo"/>
-        </b-navbar-item>
-      </template>
-      <template slot="end">
-        <b-navbar-item tag="router-link" to="/">
-          Home
-        </b-navbar-item>
-        <b-navbar-item tag="router-link" to="/beta-tests">
-          BetaTests
-        </b-navbar-item>
-      </template>
-    </b-navbar>
-
+    <header-nav></header-nav>
     <router-view />
   </div>
 </template>
+
+<script>
+  import Headers from './components/Headers.vue';
+
+  export default {
+    components: {
+      'header-nav': Headers,
+    }
+  };
+</script>
 
 <style lang="scss">
 // Import Bulma's core

@@ -9,13 +9,11 @@ import store from "./store";
 import GAuth from "vue-google-oauth2";
 import config from "../config";
 
-const gauthOption = {
+Vue.use(GAuth, {
   clientId: config.googleClientId,
   scope: 'profile email',
   prompt: 'select_account'
-}
-
-Vue.use(GAuth, gauthOption);
+});
 
 Vue.use(Buefy);
 Vue.use(VueMoment, { moment });
@@ -25,6 +23,17 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
   store,
-  render: h => h(App)
+  render: h => h(App),
+  methods: {
+    setLoggedIn(user) {
+      console.log("isLoggedIn" + user.data.email);
+      this.isLoggedIn = true;
+    }
+  }
 }).$mount("#app");

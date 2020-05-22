@@ -1,9 +1,5 @@
 import axios from "axios";
 import config from "../../../config";
-import app from "../../main";
-
-// 임시코드
-axios.defaults.headers.common['x-access-token'] = config.temporaryAccessToken;
 
 const instance = axios.create({
   baseURL: config.serverBaseUrl,
@@ -12,11 +8,18 @@ const instance = axios.create({
 
 function create(axiosInstance) {
   axiosInstance.interceptors.response.use(
-    response => response,
+    response => {
+        if(response.request.responseURL.indexOf('/user/signIn') > -1){
+            const accessToken = response.data.accessToken;
+            axiosInstance.defaults.headers.common['x-access-token'] = accessToken;
+            return response;
+        }
+
+        return response;
+    },
     error => {
       if (error.response.status === 403) {
-        app.removeCookie("access_token");
-        delete axiosInstance.defaults.headers.common["Authorization"];
+        delete axiosInstance.defaults.headers.common['x-access-token'];
       }
       return Promise.reject(error);
     }

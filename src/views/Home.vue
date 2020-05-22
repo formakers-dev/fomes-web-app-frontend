@@ -18,7 +18,7 @@
           <div class="columns is-centered">
             <div class="column has-text-centered">
               <h1 class="title">신작게임 놀이터, 포메스!!</h1>
-              <a href="#" @click="handleClickSignIn">
+              <a href="#" @click="handleClickSignIn" v-show="!this.$root.isLoggedIn">
                 <img src="../assets/btn_google_signin_light_normal_web.png" alt="Login"/>
               </a>
             </div>
@@ -30,15 +30,25 @@
 </template>
 
 <script>
+  import request from "../common/utils/http";
 
 export default {
   name: "Home",
   methods: {
     handleClickSignIn() {
       this.$gAuth.signIn()
+            .then(googleUser => {
+              const idToken = googleUser.getAuthResponse().id_token;
+
+              const headers = {
+                'Content-Type': 'application/json',
+                'x-id-token': idToken
+              };
+
+              return request.post('/user/signIn', {}, {headers : headers});
+            })
             .then(user => {
-              const idToken = user.getAuthResponse().id_token;
-              console.log('googleSignIn user', idToken);
+              this.$root.setLoggedIn(user);
             })
             .catch(error  => {
               console.error(error);

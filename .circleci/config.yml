@@ -40,7 +40,7 @@ jobs:
           name: npm 테스트
           command: npm test
 
-  build:
+  dev-build:
     <<: *defaults
     steps:
       - checkout
@@ -54,7 +54,7 @@ jobs:
       - save_cache: *save-npm-cache
       - run:
           name: Build in Development Mode
-          command: npm run build
+          command: npm run build-dev
       - persist_to_workspace:
           root: .
           paths: dist
@@ -102,10 +102,10 @@ workflows:
   build-deploy:
     jobs:
       #      - test
-      - build
+      - dev-build
       - dev-deploy:
           requires:
-            - build
+            - dev-build
           filters:
             branches:
               only:

@@ -6,8 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loginStatus: '',
-    email: ''
+    loginStatus: "",
+    email: ""
   },
   mutations: {
     authRequest(state) {
@@ -19,6 +19,10 @@ export default new Vuex.Store({
     },
     authError(state) {
       state.loginStatus = "error";
+    },
+    logout(state) {
+      state.loginStatus = "";
+      state.email = "";
     }
   },
   actions: {
@@ -41,6 +45,14 @@ export default new Vuex.Store({
               commit('authError');
               reject(err);
             });
+      });
+    },
+    logout({commit}){
+      return new Promise((resolve) => {
+        console.log("dispatch logout!!!");
+        commit('logout');
+        request.deleteTokenHeader();
+        resolve();
       });
     }
   },

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import store from "../store/index";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,13 @@ const routes = [
     name: "BetaTests",
     component: () =>
         import(/* webpackChunkName: "betaTests" */ "../views/MyBetaTests.vue")
+  },
+  {
+    path: '/logout',
+    beforeEnter(to, from, next) {
+      store.dispatch("logout");
+      next('/');
+    }
   }
 ];
 

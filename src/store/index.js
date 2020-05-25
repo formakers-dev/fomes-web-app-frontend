@@ -6,14 +6,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loginStatus: null
+    loginStatus: '',
+    email: ''
   },
   mutations: {
     authRequest(state) {
       state.loginStatus = "request";
     },
-    authSuccess(state) {
+    authSuccess(state, email) {
       state.loginStatus = "success";
+      state.email = email;
     },
     authError(state) {
       state.loginStatus = "error";
@@ -31,7 +33,7 @@ export default new Vuex.Store({
 
         request.post('/user/signIn', {}, {headers : headers})
             .then(user => {
-              commit('authSuccess');
+              commit('authSuccess', user.data.email);
               resolve(user);
             })
             .catch(err => {
@@ -43,7 +45,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    isLoggedIn: state => state.loginStatus === "success"
+    isLoggedIn: state => state.loginStatus === "success",
+    getEmail: state => state.email
   },
   modules: {}
 });

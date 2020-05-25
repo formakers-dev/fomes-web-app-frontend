@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      email: "yena.kim@formakers.net",
+      email: this.$store.getters.getEmail,
       betaTests: Array,
       fomesDownloadUrl: "https://play.google.com/store/apps/details?id=com.formakers.fomes"
     };

@@ -5,6 +5,14 @@ import store from "../store/index";
 
 Vue.use(VueRouter);
 
+const requireAuth = () => (from, to, next) => {
+  if (store.getters.isLoggedIn) {
+    next();
+  } else {
+    next("/");
+  }
+};
+
 const routes = [
   {
     path: "/",
@@ -15,7 +23,8 @@ const routes = [
     path: "/beta-tests",
     name: "BetaTests",
     component: () =>
-        import(/* webpackChunkName: "betaTests" */ "../views/MyBetaTests.vue")
+        import(/* webpackChunkName: "betaTests" */ "../views/MyBetaTests.vue"),
+    beforeEnter: requireAuth()
   },
   {
     path: '/logout',

@@ -48,11 +48,16 @@ export default new Vuex.Store({
       });
     },
     logout({commit}){
-      return new Promise((resolve) => {
-        console.log("dispatch logout!!!");
-        commit('logout');
-        request.deleteTokenHeader();
-        resolve();
+      return new Promise((resolve, reject) => {
+        request.post("/logout")
+            .then(() => {
+              commit('logout');
+              resolve();
+            })
+            .catch(err => {
+              console.error(err);
+              reject(err);
+            });
       });
     }
   },

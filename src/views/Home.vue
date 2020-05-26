@@ -52,6 +52,7 @@ export default {
         })
         .then(() => {
           console.log("Successfully sign in");
+          this.$router.push("/beta-tests");
         })
         .catch(error => {
           console.error(error);

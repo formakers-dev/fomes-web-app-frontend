@@ -32,6 +32,11 @@
 <script>
 export default {
   name: "Home",
+  data() {
+    return {
+      fomesDownloadUrl: "https://play.google.com/store/apps/details?id=com.formakers.fomes"
+    };
+  },
   methods: {
     handleClickSignIn() {
       this.$gAuth.signIn()
@@ -40,11 +45,20 @@ export default {
 
               return this.$store.dispatch('login', idToken);
             })
-            .then(user => {
-              console.log("성공!!! : ", user);
+            .then(() => {
+              console.log("Successfully sign in");
             })
             .catch(error  => {
               console.error(error);
+              if (error.response.status === 403) {
+                this.$buefy.dialog.alert({
+                  title: '⚠️ 포메스 앱 미가입 계정',
+                  message: `포메스 모바일 앱에 가입되지 않은 계정입니다.<br/><br/><b><a href="${this.fomesDownloadUrl}" target="_blank">포메스 모바일 앱</a></b>에서 회원 가입 후, 이용하실 수 있습니다.`,
+                  type: 'is-danger',
+                  ariaRole: 'alertdialog',
+                  ariaModal: true
+                });
+              }
             });
   },
 }

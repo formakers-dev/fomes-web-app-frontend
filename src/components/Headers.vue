@@ -3,6 +3,7 @@
         <template slot="brand">
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 <img src="../assets/logo.png" alt="Logo"/>
+                <b style="margin-left: .2rem; font-size: .7rem; color: lightgray">Lite</b>
             </b-navbar-item>
         </template>
         <template slot="end" v-if="isLoggedIn">

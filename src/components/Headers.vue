@@ -1,5 +1,5 @@
 <template>
-    <b-navbar>
+    <b-navbar type="is-dark">
         <template slot="brand">
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 <img src="../assets/logo.png" alt="Logo"/>

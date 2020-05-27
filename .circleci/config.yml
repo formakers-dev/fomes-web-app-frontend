@@ -62,27 +62,27 @@ jobs:
           name: check dist directory
           command: pwd; ls; ls dist
 
-    prd-build:
-      <<: *defaults
-      steps:
-        - checkout
-        - attach_workspace: *attach_workspace
-        - run: *update-npm
-        - restore_cache: *restore-npm-cache
-        - run: *install-npm
-        - run:
-            name: sass rebuild
-            command: npm rebuild node-sass
-        - save_cache: *save-npm-cache
-        - run:
-            name: Build in Production Mode
-            command: npm run build
-        - persist_to_workspace:
-            root: .
-            paths: dist
-        - run:
-            name: check dist directory
-            command: pwd; ls; ls dist
+  prd-build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - run:
+          name: sass rebuild
+          command: npm rebuild node-sass
+      - save_cache: *save-npm-cache
+      - run:
+          name: Build in Production Mode
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths: dist
+      - run:
+          name: check dist directory
+          command: pwd; ls; ls dist
 
   dev-deploy:
     <<: *defaults

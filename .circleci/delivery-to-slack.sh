@@ -15,7 +15,7 @@ echo "version : $VERSION"
 ### end of getting version
 
 if [ "$1" == "PRD" ]; then
-  URL="https://fomes.web.app"
+  URL="https://fomes-playground-alpha.web.app"
 else
   URL="https://fomes-web-dev.web.app"
 fi

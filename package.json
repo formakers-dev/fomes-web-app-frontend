@@ -16,6 +16,7 @@
     "moment": "latest",
     "vue": "^2.6.11",
     "vue-google-oauth2": "^1.5.4",
+    "vue-gtag": "^1.6.2",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"

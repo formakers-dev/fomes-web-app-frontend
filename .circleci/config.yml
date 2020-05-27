@@ -114,7 +114,7 @@ jobs:
           command: mv firebase-prd.json firebase.json
       - run:
           name: Prd Firebase Deploy
-          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:fomes --token "$FIREBASE_TOKEN"
+          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:fomes-playground-alpha --token "$FIREBASE_TOKEN"
       - run:
           name: Archive and Delivery to Slack
           command: bash .circleci/delivery-to-slack.sh PRD _general $CIRCLE_BRANCH

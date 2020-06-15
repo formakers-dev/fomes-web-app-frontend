@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="missions-container">
-        <p style="font-weight: bold; margin-bottom: 0.3rem;">현재 참여 가능한 미션</p>
+        <p style="font-weight: bold; margin-bottom: 0.3rem;">현재 {{ isCompleted ? "수정" : "참여"}} 가능한 미션</p>
         <footer v-if="betaTest.missions" class="card-footer">
           <div
             class="card-footer-item"

@@ -7,6 +7,8 @@
       </figure>
     </div>
     <div class="card-content">
+      <b-tag class="plan is-medium" :class="isPrimium ? 'is-warning': 'is-primary'">{{ planDisplayString }}</b-tag>
+      <b-tag class="my-status is-medium " :class="isCompleted ? 'is-primary': ''">{{ myStatusDisplayString }}</b-tag>
       <div class="media">
         <div class="media-left">
           <figure class="image is-96x96">
@@ -20,6 +22,7 @@
 <!--            <p>-->
 <!--              <b-tag style="margin-right: 0.3rem" v-for="tag in betaTest.tags" v-bind:key="tag">{{tag}}</b-tag>-->
 <!--            </p>-->
+            <p>{{ betaTest.missionsSummary }}</p>
             <p>
               <time v-bind:datetime="betaTest.openDate">{{ betaTest.openDate | moment("YYYY-MM-DD") }}</time>
               ~
@@ -96,6 +99,22 @@ export default {
 
       return result;
     }
+  },
+  computed: {
+    isPrimium() {
+      return (
+        this.betaTest.plan === "standard" || this.betaTest.plan === "simple"
+      );
+    },
+    isCompleted() {
+      return this.betaTest.isCompleted;
+    },
+    planDisplayString() {
+      return this.isPrimium ? "프리미엄 테스트" : "간단 테스트";
+    },
+    myStatusDisplayString() {
+      return this.isCompleted ? "참여완료" : "참여중";
+    }
   }
 };
 </script>
@@ -111,5 +130,11 @@ export default {
 .missions-container {
   font-size: 1.1rem;
   text-align: center;
+}
+.my-status {
+  margin-left: 10px;
+}
+.media {
+  margin-top: 10px;
 }
 </style>

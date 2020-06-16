@@ -51,6 +51,14 @@
             </a>
           </div>
         </footer>
+        <div v-if="betaTest.bugReport && betaTest.bugReport.url">
+          <a v-bind:href="betaTest.bugReport.url"
+             target="_blank"
+             rel="noopener noreferrer"
+          >
+            버그제보
+          </a>
+        </div>
       </div>
     </div>
   </div>

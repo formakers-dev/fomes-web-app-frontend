@@ -4,6 +4,7 @@
       <div class="container">
         <h1 class="title">나의 게임 테스트</h1>
         <h2 class="subtitle">현재 내가 참여 중인 게임 테스트들이에요 🎮</h2>
+        <h2 class="subtitle"><strong>각 테스트에 대한 자세한 설명은 포메스 앱을 확인해주세요!</strong></h2>
       </div>
     </section>
     <b-loading v-bind:active.sync="isLoading"></b-loading>
@@ -70,6 +71,9 @@ export default {
 }
 .section .subtitle {
   color: #808080;
+}
+.section .subtitle > strong {
+  color: #41BFB9;
 }
 .beta-test-list {
   padding: 1rem;

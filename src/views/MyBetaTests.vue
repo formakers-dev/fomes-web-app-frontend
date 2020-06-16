@@ -3,7 +3,7 @@
     <section class="section">
       <div class="container">
         <h1 class="title">나의 게임 테스트</h1>
-        <h2 class="subtitle">현재 내가 참여할 수 있는 테스트가 보여져요</h2>
+        <h2 class="subtitle">현재 내가 참여 중인 게임 테스트들이에요 🎮</h2>
       </div>
     </section>
     <b-loading v-bind:active.sync="isLoading"></b-loading>
@@ -49,7 +49,7 @@ export default {
         this.isLoading = false;
         console.log(res.data);
         this.betaTests = res.data
-          .filter(betaTest => betaTest.isAttended && !betaTest.isCompleted)
+          .filter(betaTest => betaTest.isAttended)
           .sort((a, b) => moment(a.closeDate) - moment(b.closeDate));
       })
       .catch(err => {

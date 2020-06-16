@@ -51,7 +51,7 @@
             </a>
           </div>
         </footer>
-        <div type="is-light" v-if="betaTest.bugReport">
+        <div v-if="betaTest.bugReport && betaTest.bugReport.url">
           <a v-bind:href="betaTest.bugReport.url"
              target="_blank"
              rel="noopener noreferrer"

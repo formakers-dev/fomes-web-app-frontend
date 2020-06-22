@@ -52,7 +52,7 @@
           </div>
         </footer>
         <div v-if="betaTest.bugReport && betaTest.bugReport.url">
-          <a v-bind:href="betaTest.bugReport.url"
+          <a v-bind:href="getBugReportUrl(betaTest.bugReport.url)"
              target="_blank"
              rel="noopener noreferrer"
           >
@@ -108,7 +108,8 @@ export default {
       return result;
     },
     replacedLinkWithReservedWords(mission) {
-      let link = mission.action.replace('{email}', this.email);
+      let link = this.convertDeeplinkToUrl(mission.action);
+      link = link.replace('{email}', this.email);
 
       const btIdsFormat = '{b-m-ids}';
       const idSeparator = "$$$$"; //javascript string replace 특성 고려하여 4개로 반영
@@ -119,6 +120,20 @@ export default {
       }
 
       return link;
+    },
+    getBugReportUrl(url) {
+      if (url && url !== "") {
+        const bugReportUrl = this.convertDeeplinkToUrl(url);
+        return bugReportUrl.replace('{email}', this.email);
+      }
+    },
+    convertDeeplinkToUrl(url) {
+      if (url.startsWith("fomes://")) {
+        const parsedUrl = new URL(url);
+        return parsedUrl.searchParams.get("url");
+      } else {
+        return url;
+      }
     }
   },
   computed: {

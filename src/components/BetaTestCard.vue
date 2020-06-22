@@ -43,7 +43,7 @@
             v-bind:key="mission._id"
           >
             <a
-              v-bind:href="mission.action.replace('{email}', email)"
+              v-bind:href="replacedLinkWithReservedWords(mission)"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -51,6 +51,14 @@
             </a>
           </div>
         </footer>
+        <div v-if="betaTest.bugReport && betaTest.bugReport.url">
+          <a v-bind:href="betaTest.bugReport.url"
+             target="_blank"
+             rel="noopener noreferrer"
+          >
+            버그제보
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -98,6 +106,19 @@ export default {
       }
 
       return result;
+    },
+    replacedLinkWithReservedWords(mission) {
+      let link = mission.action.replace('{email}', this.email);
+
+      const btIdsFormat = '{b-m-ids}';
+      const idSeparator = "$$$$"; //javascript string replace 특성 고려하여 4개로 반영
+
+      if (link.indexOf(btIdsFormat) > -1) {
+        const btIds = btoa(btoa(mission.betaTestId)) + idSeparator + btoa(btoa(mission._id));
+        link = link.replace(btIdsFormat, btIds);
+      }
+
+      return link;
     }
   },
   computed: {

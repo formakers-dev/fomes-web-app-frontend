@@ -7,7 +7,14 @@
       </figure>
     </div>
     <div class="card-content">
-      <b-tag class="my-status is-medium " :class="isCompleted ? 'is-primary': ''">{{ myStatusDisplayString }}</b-tag>
+      <div class="columns">
+        <div class="column has is-three-quarters">
+          <b-tag class="my-status is-medium " :class="isCompleted ? 'is-primary': ''">{{ myStatusDisplayString }}</b-tag>
+        </div>
+        <div class="column has-text-right">
+          <a href="#" @click="requestBetaTestDetail"><b-icon icon="refresh is-right" size="is-medium"></b-icon></a>
+        </div>
+      </div>
       <div class="media">
         <div class="media-left">
           <figure class="image is-96x96">
@@ -60,11 +67,15 @@
         </div>
       </div>
     </div>
+    <loading :active.sync="isLoading"
+             :is-full-page="false"></loading>
   </div>
 </template>
 
 <script>
 import request from "../common/utils/http";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: "BetaTestCard",
@@ -72,21 +83,36 @@ export default {
     email: String,
     betaTest: Object
   },
+  components: {
+    Loading
+  },
+  data() {
+    return {
+      isLoading: false,
+    }
+  },
   created() {
-    const self = this;
-    request
-      .get("/beta-tests/detail/" + this.betaTest._id)
-      .then(res => {
-        console.log(res.data);
-        // this.betaTest.iconImageUrl = res.data.iconImageUrl;
-        // this.betaTest.mission = res.data.missions[0];
-        self.$set(self.betaTest, "iconImageUrl", res.data.iconImageUrl);
-        self.$set(self.betaTest, "missions", res.data.missions.sort((a, b) => a.order - b.order));
-        console.log(this.betaTest);
-      })
-      .catch(err => console.error(err));
+    this.requestBetaTestDetail();
   },
   methods: {
+    requestBetaTestDetail() {
+      this.isLoading = true;
+
+      const self = this;
+      request
+          .get("/beta-tests/detail/" + this.betaTest._id)
+          .then(res => {
+            console.log(res.data);
+            // this.betaTest.iconImageUrl = res.data.iconImageUrl;
+            // this.betaTest.mission = res.data.missions[0];
+            self.$set(self.betaTest, "iconImageUrl", res.data.iconImageUrl);
+            self.$set(self.betaTest, "missions", res.data.missions.sort((a, b) => a.order - b.order));
+            self.$set(self.betaTest, "isCompleted", res.data.isCompleted);
+            console.log(this.betaTest);
+          })
+          .catch(err => console.error(err))
+          .finally(() => self.isLoading = false);
+    },
     getValidMissions() {
       let result = [];
       const repeatableMissions = this.betaTest.missions.filter(mission => mission.isRepeatable && mission.isCompleted);
@@ -133,7 +159,7 @@ export default {
       } else {
         return url;
       }
-    }
+    },
   },
   computed: {
     isCompleted() {

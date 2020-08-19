@@ -7,7 +7,6 @@
       </figure>
     </div>
     <div class="card-content">
-      <b-tag class="plan is-medium" :class="isPrimium ? 'is-warning': 'is-primary'">{{ planDisplayString }}</b-tag>
       <b-tag class="my-status is-medium " :class="isCompleted ? 'is-primary': ''">{{ myStatusDisplayString }}</b-tag>
       <div class="media">
         <div class="media-left">
@@ -137,16 +136,8 @@ export default {
     }
   },
   computed: {
-    isPrimium() {
-      return (
-        this.betaTest.plan === "standard" || this.betaTest.plan === "simple"
-      );
-    },
     isCompleted() {
       return this.betaTest.isCompleted;
-    },
-    planDisplayString() {
-      return this.isPrimium ? "프리미엄 테스트" : "간단 테스트";
     },
     myStatusDisplayString() {
       return this.isCompleted ? "참여완료" : "참여중";

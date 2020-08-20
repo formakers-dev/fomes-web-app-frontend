@@ -32,6 +32,12 @@ const routes = [
       store.dispatch("logout");
       next('/');
     }
+  },
+  {
+    path: "/help",
+    beforeEnter() {
+      window.open("https://blog.naver.com/formakers/222066045589", '_blank');
+    }
   }
 ];
 

@@ -13,10 +13,12 @@
     "axios": "^0.19.2",
     "buefy": "^0.8.19",
     "core-js": "^3.6.4",
+    "mdi": "^2.2.43",
     "moment": "latest",
     "vue": "^2.6.11",
     "vue-google-oauth2": "^1.5.4",
     "vue-gtag": "^1.6.2",
+    "vue-loading-overlay": "^3.3.3",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"

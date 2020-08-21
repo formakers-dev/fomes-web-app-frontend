@@ -9,6 +9,7 @@ import router from "./router";
 import store from "./store";
 import GAuth from "vue-google-oauth2";
 import config from "../config";
+import 'mdi/css/materialdesignicons.min.css';
 
 Vue.use(VueGtag, {
   config: {

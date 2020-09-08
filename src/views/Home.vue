@@ -7,14 +7,20 @@
           style="width: 600px"
           src="../assets/emphasis.png"
         />
-        <img style="width: 450px; margin-top: 1rem" src="../assets/logo.png" />
+        <img style="width: 450px; margin-top: 1rem" src="../assets/logo.png"/>
       </div>
-      <h1
-        class="title has-text-centered has-text-weight-bold"
-        style="color: white; margin-top: 1.5rem"
-      >
-        신작게임 놀이터, 포메스!
-      </h1>
+      <div class="has-text-centered"
+        style="color: white;">
+        <h1
+            class="title has-text-weight-bold"
+            style="color: white; margin-top: 1.5rem"
+        >
+          신작게임 놀이터, 포메스!
+        </h1>
+<!--        PC에서 사용할 수 있는 버전입니다<br/>-->
+<!--        <strong><a v-bind:href="this.fomesDownloadUrl"-->
+<!--           target="_blank" style="color: white; text-decoration: underline">포메스 앱</a></strong>에서 회원가입 후 로그인 가능합니다-->
+      </div>
       <div style="margin-top: 2rem;">
         <a
           href="#"
@@ -27,6 +33,12 @@
             alt="Login"
           />
         </a>
+      </div>
+      <div class="has-text-centered"
+           style="color: white; margin-top: 1.5rem">
+        PC에서 사용할 수 있는 버전입니다<br/>
+        <strong><a v-bind:href="this.fomesDownloadUrl"
+                   target="_blank" style="color: white; text-decoration: underline">포메스 앱</a></strong>에서 회원가입 후 로그인 가능합니다
       </div>
     </div>
   </div>

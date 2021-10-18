@@ -1,5 +1,8 @@
 # girlapp-web
 
+* PRD : https://fomes-playground-alpha.web.app/
+* DEV : https://fomes-web-dev.web.app
+
 ## Project setup
 ```
 npm install
